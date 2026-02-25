@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philip Agbove | Fullstack Developer Portfolio</title>
+    <meta name="description"
+        content="Modern Fullstack Web Developer and Software Engineer specializing in Frontend, Backend, Databases, and Mobile solutions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ========================================
+           CSS CUSTOM PROPERTIES (THEME TOKENS)
+           ======================================== */
+        :root {
+            --transition-theme: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* DARK THEME (default) */
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #0e0e0e;
+            --bg-card: #141414;
+            --bg-navbar: rgba(10, 10, 10, 0.85);
+            --bg-navbar-scrolled: rgba(10, 10, 10, 0.95);
+            --bg-mobile-nav: rgba(10, 10, 10, 0.98);
+
+            --text-primary: #f5f5f5;
+            --text-body: #d1d1d1;
+            --text-muted: #888;
+            --text-subtle: #666;
+
+            --accent: #c0f060;
+            --accent-hover: #d4ff7a;
+            --accent-bg: rgba(192, 240, 96, 0.1);
+            --accent-border: rgba(192, 240, 96, 0.15);
+            --accent-glow: rgba(192, 240, 96, 0.08);
+
+            --border-card: rgba(255, 255, 255, 0.05);
+            --border-input: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+            --font-heading: 'Inter', sans-serif;
+            --watermark-display: none;
+            --logo-size: 1.5rem;
+            --hero-flex-dir: row;
+            --text-align: left;
+            --dp-radius: 50%;
+            --dp-border: 4px solid var(--accent-border);
+            --dp-shadow: 0 50px 100px rgba(0, 0, 0, 0.1);
+        }
+
+        /* LIGHT THEME (Premium Modern) */
+        [data-theme="light"] {
+            --bg-primary: #fdfdfd;
+            --bg-secondary: #f4f4f7;
+            --bg-card: #ffffff;
+            --bg-navbar: transparent;
+            --bg-navbar-scrolled: rgba(253, 253, 253, 0.9);
+            --bg-mobile-nav: rgba(253, 253, 253, 0.98);
+
+            --text-primary: #000000;
+            --text-body: #222222;
+            --text-muted: #555555;
+            --text-subtle: #888888;
+
+            --accent: #000000;
+            --accent-hover: #333333;
+            --accent-bg: rgba(0, 0, 0, 0.04);
+            --accent-border: transparent;
+            --accent-glow: rgba(0, 0, 0, 0.05);
+
+            --border-card: rgba(0, 0, 0, 0.08);
+            --border-input: rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+
+            --font-heading: 'JetBrains Mono', monospace;
+            --watermark-display: block;
+            --logo-size: 4rem;
+            --hero-flex-dir: row;
+            --text-align: left;
+            --dp-radius: 0;
+            --dp-border: none;
+            --dp-shadow: none;
+        }
+
+        /* ========================================
+           BASE STYLES
+           ======================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-body);
+            line-height: 1.5;
+            font-size: 0.95rem;
+            overflow-x: hidden;
+            transition: background var(--transition-theme), color var(--transition-theme);
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 1.2rem 4rem;
+            background: var(--bg-navbar-scrolled);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .nav-logo {
+            font-size: var(--logo-size);
+            font-weight: 950;
+            color: var(--text-primary);
+            letter-spacing: -3px;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        /* Dark Mode Links */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        [data-theme="light"] .nav-links {
+            display: none;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        /* Light Mode Pill Nav */
+        .nav-pill-wrapper {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        [data-theme="light"] .nav-pill-wrapper {
+            display: block;
+        }
+
+        .nav-pill {
+            background: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-pill a {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #888;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            transition: 0.3s;
+        }
+
+        .nav-pill a:hover,
+        .nav-pill a.active {
+            background: #000 !important;
+            color: #fff !important;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 4rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watermark {
+            display: var(--watermark-display);
+            position: absolute;
+            left: 55%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22vw;
+            font-weight: 950;
+            color: rgba(0, 0, 0, 0.015);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: -10px;
+        }
+
+        .hero-content {
+            max-width: 1800px;
+            /* Expanded for massive creative focus */
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: var(--hero-flex-dir);
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1.2;
+            text-align: var(--text-align);
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            /* Even smaller and more elegant */
+            font-weight: 950;
+            color: var(--text-primary);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2.5px;
+        }
+
+        .hero h1 .accent {
+            color: var(--accent);
+        }
+
+        .hero-description {
+            font-size: 0.9rem;
+            /* Smaller for premium landing Feel */
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 1.1rem 2.2rem;
+            border-radius: 12px;
+            font-weight: 800;
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border-input);
+            padding: 1.1rem 2.2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hero-image-wrapper {
+            flex: 1.5;
+            /* Give much more space to the image */
+            position: relative;
+            width: clamp(300px, 50vw, 1200px);
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: var(--dp-radius);
+            border: var(--dp-border);
+            transition: opacity 0.5s ease;
+            box-shadow: var(--dp-shadow);
+        }
+
+        [data-theme="dark"] .profile-img.light {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        [data-theme="dark"] .profile-img.dark {
+            opacity: 1;
+        }
+
+        [data-theme="light"] .profile-img.dark {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .profile-img.light {
+            opacity: 1;
+        }
+
+        /* Adjust DP 2 position in Light Mode — MAKE IT ABSOLUTELY HUGE */
+        [data-theme="light"] .hero-image-wrapper {
+            justify-content: flex-start;
+            margin-left: -8%;
+            width: clamp(600px, 85vw, 1600px);
+            /* Massive Creative Focus */
+        }
+
+        /* ========================================
+           SERVICES
+           ======================================== */
+        section {
+            padding: 10rem 4rem;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 900;
+            color: var(--text-primary);
+            letter-spacing: -2px;
+            margin-bottom: 4rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            padding: 3.5rem 2.5rem;
+            border-radius: 2rem;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-border);
+            box-shadow: var(--card-shadow);
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-bg);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .service-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 850;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* ========================================
+           PROJECTS
+           ======================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-preview {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--bg-secondary);
+            padding: 1rem 1rem 0;
+            overflow: hidden;
+        }
+
+        .browser-top {
+            height: 20px;
+            background: rgba(128, 128, 128, 0.1);
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 4px;
+        }
+
+        .browser-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .browser-dot {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.7rem;
+            color: var(--text-subtle);
+            letter-spacing: 2px;
+        }
+
+        .project-info {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-info h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .project-link {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-size: 0.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            background: var(--accent-bg);
+            color: var(--accent);
+            border-radius: 100px;
+        }
+
+        /* ========================================
+           CONTACT
+           ======================================== */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-input);
+            border-radius: 12px;
+            color: var(--text-primary);
+            outline: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent);
+        }
+
+        /* ========================================
+           THEME TOGGLE
+           ======================================== */
+        .theme-toggle-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+        }
+
+        .theme-toggle-floating {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: 0.4s;
+        }
+
+        .theme-toggle-floating svg {
+            width: 22px;
+            height: 22px;
+            color: var(--accent);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+
+            .navbar,
+            .hero,
+            section {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .hero-content {
+                flex-direction: column !important;
+                text-align: center;
+            }
+
+            .hero-text {
+                text-align: center !important;
+            }
+
+            [data-theme="light"] .hero-image-wrapper {
+                margin-left: 0;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="nav-logo">philip<span>.</span></a>
+
+        <div class="nav-pill-wrapper">
+            <ul class="nav-pill">
+                <li><a href="#home" class="active">HOME</a></li>
+                <li><a href="#projects">WORKS</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="#contact">HELLO</a></li>
+            </ul>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#home" class="active">HOME</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <button class="theme-toggle-floating" id="themeToggle" aria-label="Toggle Theme">
+            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"></svg>
+        </button>
+    </div>
+
+    <!-- HERO -->
+    <div class="watermark">PORTFOLIO</div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="section-tag reveal">Fullstack Developer</span>
+                <h1 class="reveal">Building the <span class="accent">next</span> generation of web apps.</h1>
+                <p class="hero-description reveal">
+                    Hi, I'm Philip. A Software Engineer from Accra specializing in
+                    performant frontend systems, robust backend architecture, and
+                    modern mobile solutions.
+                </p>
+                <div class="hero-actions reveal">
+                    <a href="#projects" class="btn-primary">View Projects</a>
+                    <a href="AGBOVE%20PHILIP%20KWABENA.docx" download class="btn-secondary">Download CV</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper reveal">
+                <img class="profile-img dark" src="Profile.jpeg" alt="Philip Agbove" />
+                <img class="profile-img light" src="dp 2.png" alt="Philip Agbove" />
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-tag">Expertise</span>
+                <h2 class="section-title">End-to-end Solutions</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="service-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M22 12L18 16L14 12L18 8L22 12ZM6 8L2 12L6 16L10 12L6 8ZM12 18L14 12L12 6L10 12L12 18Z" />
+                        </svg></div>
+                    <h3>Frontend<br>Development</h3>
+                    <p>Pixel-perfect, accessible, and fast web interfaces built with modern technologies.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2L4 5V11C4 16.19 7.41 20.87 12 22C16.59 20.87 20 16.19 20 11V5L12 2ZM12 4.38L18 6.63V11C18 15.01 15.42 18.58 12 19.82C8.58 18.58 6 15.01 6 11V6.63L12 4.38Z" />
+                        </svg></div>
+                    <h3>Backend &<br>Database</h3>
+                    <p>Scalable server-side logic and complex data management structures.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                        </svg></div>
+                    <h3>Mobile App<br>Development</h3>
+                    <p>Building cross-platform mobile experiences that feel native and perform fast.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-tag">Selected Works</span>
+                <h2 class="section-title">Innovative Solutions</h2>
+            </div>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/merilla.png" alt="Merilla Closet"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Fashion</span><span class="tag">E-Commerce</span>
+                        </div>
+                        <h3>Merilla Closet</h3>
+                        <p>Sophisticated fashion platform with real-time availability and premium UX.</p>
+                        <a href="https://merillacloset.kesug.com" target="_blank" class="project-link">View Site →</a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/de-georgia.png" alt="De-Georgia Motors"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Automotive</span><span class="tag">Luxury</span>
+                        </div>
+                        <h3>De-Georgia Motors</h3>
+                        <p>High-end car dealership interface with advanced filtering and performance listings.</p>
+                        <a href="https://de-georgia-motors.vercel.app/" target="_blank" class="project-link">View Site
+                            →</a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/success-sneakers.png" alt="Success Sneakers"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Sneakers</span><span class="tag">Retail</span></div>
+                        <h3>Success Sneakers</h3>
+                        <p>Dynamic footwear storefront focusing on visual storytelling and brand identity.</p>
+                        <a href="https://success-sneakers.gt.tc" target="_blank" class="project-link">View Site →</a>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/fashion-hub.png" alt="Fashion Hub"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Trends</span><span class="tag">Editorial</span>
+                        </div>
+                        <h3>The Fashion Hub</h3>
+                        <p>Aggregating trends and cataloging high-quality imagery for the fashion community.</p>
+                        <a href="https://thefashionhub.xo.je" target="_blank" class="project-link">View Site →</a>
+                    </div>
+                </div>
+                <!-- Project 5 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/local-electrical.png" alt="Local Electrical"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Retail</span><span class="tag">Electrical</span>
+                        </div>
+                        <h3>Local Electrical Shop</h3>
+                        <p>Inventory management and online storefront for local hardware businesses.</p>
+                        <a href="https://localelectricalshop.wuaze.com" target="_blank" class="project-link">View Site
+                            →</a>
+                    </div>
+                </div>
+                <!-- Project 6 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <img src="assets/service-finder.png" alt="Service Finder"
+                            style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag">Directory</span><span class="tag">Utility</span>
+                        </div>
+                        <h3>Local Service Finder</h3>
+                        <p>Seamless connection tool for users to find reliable services in their area.</p>
+                        <a href="https://localservicefinder.free.nf" target="_blank" class="project-link">View Site
+                            →</a>
+                    </div>
+                </div>
+                <!-- Project 7 -->
+                <div class="project-card reveal">
+                    <div class="project-preview">
+                        <div class="browser-top">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <div class="project-img-placeholder"
+                            style="background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%;">
+                            <!-- Mini Makeup Site UI -->
+                            <div
+                                style="height: 40px; border-bottom: 1px solid #fce4ec; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; background: #fff;">
+                                <span
+                                    style="font-size: 0.55rem; font-weight: 900; color: #d81b60; letter-spacing: 1px;">DAUREN</span>
+                                <div style="display: flex; gap: 8px;">
+                                    <div style="width: 20px; height: 2px; background: #fce4ec;"></div>
+                                    <div style="width: 20px; height: 2px; background: #fce4ec;"></div>
+                                </div>
+                            </div>
+                            <div
+                                style="flex: 1; background: linear-gradient(135deg, #fff5f8 0%, #ffffff 100%); display: flex; align-items: center; justify-content: center; position: relative;">
+                                <div
+                                    style="width: 80%; height: 70%; background: #ffffff; border: 1px solid #fce4ec; border-radius: 4px; box-shadow: 0 5px 15px rgba(216, 27, 96, 0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px;">
+                                    <svg style="width: 40px; height: 40px; color: #d81b60; opacity: 0.6;"
+                                        viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,17H13V15H11V17M11,13H13V7H11V13Z" />
+                                    </svg>
+                                    <div style="width: 40px; height: 2px; background: #d81b60; opacity: 0.3;"></div>
+                                    <span
+                                        style="font-size: 0.5rem; font-weight: 800; color: #d81b60; text-transform: uppercase; letter-spacing: 2px;">Beauty
+                                        Artistry</span>
+                                </div>
+                                <div
+                                    style="position: absolute; right: 10%; bottom: 10%; width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fce4ec; opacity: 0.5;">
+                                </div>
+                                <div
+                                    style="position: absolute; left: 5%; top: 20%; width: 15px; height: 15px; background: #fce4ec; border-radius: 50%; opacity: 0.3;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags"><span class="tag"
+                                style="background: #fce4ec; color: #d81b60;">Beauty</span><span class="tag"
+                                style="background: #fce4ec; color: #d81b60;">Portfolio</span></div>
+                        <h3>Dauren Makeup Go</h3>
+                        <p>Elegant portfolio and booking system for fashion and beauty artists.</p>
+                        <a href="https://daurenmakeupgo.infinityfree.me" target="_blank" class="project-link"
+                            style="color: #d81b60;">View Site →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-tag">Contact</span>
+                <h2 class="section-title">Let's build something iconic.</h2>
+            </div>
+            <div class="contact-layout">
+                <div class="reveal">
+                    <p style="margin-bottom: 2.5rem; font-size: 1.1rem; color: var(--text-muted);">
+                        I'm currently available for freelance work and full-time opportunities.
+                        Let's talk about your vision.
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <div>
+                            <span
+                                style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px;">Email</span>
+                            <p style="margin-top: 0.5rem;"><a href="mailto:kwabenaphilip268@gmail.com"
+                                    style="font-weight: 800; font-size: 1.4rem; color: var(--accent);">kwabenaphilip268@gmail.com</a>
+                            </p>
+                        </div>
+                        <div>
+                            <span
+                                style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px;">Socials</span>
+                            <div
+                                style="display: flex; gap: 1.5rem; margin-top: 0.8rem; font-weight: 800; font-size: 0.85rem; opacity: 0.8;">
+                                <a href="#" target="_blank" aria-label="LinkedIn">
+                                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg>
+                                </a>
+                                <a href="#" target="_blank" aria-label="GitHub">
+                                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                </a>
+                                <a href="#" target="_blank" aria-label="X">
+                                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+                                        <path
+                                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form reveal" id="contactForm">
+                    <input type="text" name="user_name" placeholder="Full Name" required>
+                    <input type="email" name="user_email" placeholder="Email Address" required>
+                    <textarea name="message" rows="6" placeholder="Project Details" required></textarea>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                        Send Message
+                        <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <div id="formStatus"
+                        style="margin-top: 1.5rem; font-size: 0.8rem; font-weight: 700; display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer
+        style="padding: 4rem; text-align: center; border-top: 1px solid var(--border-card); opacity: 0.5; font-size: 0.8rem; font-weight: 700;">
+        <p>© 2025 PHILIP AGBOVE. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function () { emailjs.init("S1Os8Sc1QCZZzl4be"); })();
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        const updateIcon = (theme) => {
+            if (theme === 'light') {
+                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'; // Moon
+            } else {
+                themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M17.66 5.66l1.42-1.42"/>'; // Sun
+            }
+        };
+
+        const setTheme = (theme) => {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateIcon(theme);
+            // Redraw fix
+            html.style.display = 'none';
+            html.offsetHeight;
+            html.style.display = '';
+        };
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        // Form Handling
+        const contactForm = document.getElementById('contactForm');
+        const status = document.getElementById('formStatus');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = 'Sending...';
+            status.style.display = 'block';
+            status.style.color = 'var(--text-muted)';
+            status.textContent = 'CONNECTING TO SERVER...';
+
+            emailjs.sendForm('service_6t879e8', 'template_3dd72ud', contactForm)
+                .then(() => {
+                    status.style.color = 'var(--accent)';
+                    status.textContent = 'MESSAGE SENT SUCCESSFULLY!';
+                    contactForm.reset();
+                    setTimeout(() => status.style.display = 'none', 5000);
+                }, (error) => {
+                    status.style.color = '#ff4444';
+                    status.textContent = 'FAILED TO SEND. PLEASE TRY AGAIN.';
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+        });
+
+        // Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Navbar Scroll
+        window.onscroll = () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-pill a, .nav-links a');
+            let current = "";
+            sections.forEach(s => {
+                if (window.pageYOffset >= s.offsetTop - 300) current = s.id
+            });
+
+            navLinks.forEach(l => {
+                l.classList.remove('active');
+                if (l.getAttribute('href').includes(current) && current !== "") l.classList.add('active');
+            });
+        };
+    </script>
+</body>
+
+</html>
