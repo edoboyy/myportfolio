@@ -1,0 +1,13 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Large assets (optional - keep if you want to store them in Git)
+# assets/*.png
+# dp 2.png
+
+# Workspace files
+.agent/
+.gemini/
+.env
