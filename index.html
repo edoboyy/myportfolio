@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Philip Agbove | Fullstack Developer Portfolio</title>
     <meta name="description"
         content="Modern Fullstack Web Developer and Software Engineer specializing in Frontend, Backend, Databases, and Mobile solutions.">
@@ -101,6 +101,8 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: clip;
+            max-width: 100%;
         }
 
         body {
@@ -109,8 +111,15 @@
             color: var(--text-body);
             line-height: 1.5;
             font-size: 0.95rem;
-            overflow-x: hidden;
+            overflow-x: clip;
+            overscroll-behavior-x: none;
+            width: 100%;
+            max-width: 100vw;
             transition: background var(--transition-theme), color var(--transition-theme);
+        }
+
+        body.menu-open {
+            overflow: hidden;
         }
 
         ::selection {
@@ -143,7 +152,9 @@
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
             width: 100%;
+            max-width: 100vw;
             z-index: 1000;
             padding: 2rem 4rem;
             display: flex;
@@ -243,25 +254,28 @@
             padding: 6rem 4rem 4rem;
             position: relative;
             overflow: hidden;
+            max-width: 100vw;
         }
 
         .watermark {
             display: var(--watermark-display);
             position: absolute;
-            left: 55%;
+            left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 22vw;
+            font-size: min(22vw, 12rem);
             font-weight: 950;
             color: rgba(0, 0, 0, 0.015);
             z-index: 1;
             pointer-events: none;
             letter-spacing: -10px;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .hero-content {
-            max-width: 1800px;
-            /* Expanded for massive creative focus */
+            max-width: min(1800px, 100%);
             margin: 0 auto;
             width: 100%;
             display: flex;
@@ -335,9 +349,9 @@
 
         .hero-image-wrapper {
             flex: 1.5;
-            /* Give much more space to the image */
             position: relative;
-            width: clamp(300px, 50vw, 1200px);
+            width: min(100%, clamp(280px, 50vw, 1200px));
+            max-width: 100%;
             aspect-ratio: 1;
             display: flex;
             justify-content: center;
@@ -372,12 +386,13 @@
             opacity: 1;
         }
 
-        /* Adjust DP 2 position in Light Mode — MAKE IT ABSOLUTELY HUGE */
-        [data-theme="light"] .hero-image-wrapper {
-            justify-content: flex-start;
-            margin-left: -8%;
-            width: clamp(600px, 85vw, 1600px);
-            /* Massive Creative Focus */
+        /* Light mode hero image — desktop only */
+        @media (min-width: 1025px) {
+            [data-theme="light"] .hero-image-wrapper {
+                justify-content: flex-start;
+                margin-left: -8%;
+                width: min(100%, clamp(600px, 85vw, 1600px));
+            }
         }
 
         /* ========================================
@@ -385,11 +400,14 @@
            ======================================== */
         section {
             padding: 10rem 4rem;
+            max-width: 100vw;
+            overflow-x: clip;
         }
 
         .section-container {
             max-width: 1400px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .section-tag {
@@ -413,7 +431,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
             gap: 2rem;
         }
 
@@ -547,6 +565,7 @@
 
         .project-tags {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
@@ -570,6 +589,8 @@
             padding: 2rem 1.5rem;
             min-height: clamp(460px, 55vw, 620px);
             aspect-ratio: auto;
+            overflow: hidden;
+            max-width: 100%;
             background:
                 radial-gradient(circle at top, var(--accent-glow), transparent 55%),
                 var(--bg-secondary);
@@ -579,16 +600,20 @@
             display: flex;
             justify-content: center;
             width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .fixit-phone {
             position: relative;
             width: min(100%, clamp(260px, 28vw, 360px));
+            max-width: 100%;
             aspect-ratio: 360 / 740;
             padding: 12px;
             border-radius: 36px;
             background: linear-gradient(160deg, #2a3142 0%, #111827 100%);
             box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+            flex-shrink: 0;
         }
 
         [data-theme="light"] .fixit-phone {
@@ -623,6 +648,15 @@
             height: 100%;
             border: 0;
             background: #fff;
+            display: block;
+            max-width: 100%;
+        }
+
+        .contact-email {
+            font-weight: 800;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            color: var(--accent);
+            word-break: break-word;
         }
 
         .project-links {
@@ -814,10 +848,12 @@
             [data-theme="light"] .hero-image-wrapper {
                 margin-left: 0;
                 width: min(100%, 420px);
+                max-width: 100%;
             }
 
             .hero-image-wrapper {
                 width: min(100%, 340px);
+                max-width: 100%;
                 margin: 0 auto;
             }
 
@@ -928,7 +964,12 @@
             }
 
             .fixit-phone {
-                width: min(92vw, 340px);
+                width: min(calc(100vw - 2rem), 340px);
+                max-width: 100%;
+            }
+
+            .watermark {
+                display: none;
             }
 
             .project-links {
@@ -1331,7 +1372,7 @@
                             <span
                                 style="font-size: 0.7rem; font-weight: 900; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px;">Email</span>
                             <p style="margin-top: 0.5rem;"><a href="mailto:kwabenaphilip268@gmail.com"
-                                    style="font-weight: 800; font-size: 1.4rem; color: var(--accent);">kwabenaphilip268@gmail.com</a>
+                                    class="contact-email">kwabenaphilip268@gmail.com</a>
                             </p>
                         </div>
                         <div>
@@ -1405,10 +1446,6 @@
             html.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
             updateIcon(theme);
-            // Redraw fix
-            html.style.display = 'none';
-            html.offsetHeight;
-            html.style.display = '';
         };
 
         themeToggle.addEventListener('click', () => {
@@ -1482,18 +1519,35 @@
             mobileMenuBtn.classList.remove('active');
             mobileNav.classList.remove('open');
             mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
+            document.body.classList.remove('menu-open');
+        };
+
+        const resetHorizontalScroll = () => {
+            if (window.scrollX !== 0) {
+                window.scrollTo(0, window.scrollY);
+            }
         };
 
         mobileMenuBtn.addEventListener('click', () => {
             const isOpen = mobileNav.classList.toggle('open');
             mobileMenuBtn.classList.toggle('active', isOpen);
             mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            document.body.classList.toggle('menu-open', isOpen);
         });
 
         mobileNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMobileNav);
+        });
+
+        window.addEventListener('orientationchange', () => {
+            closeMobileNav();
+            setTimeout(resetHorizontalScroll, 150);
+        });
+
+        window.addEventListener('resize', resetHorizontalScroll);
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) resetHorizontalScroll();
         });
     </script>
 </body>
