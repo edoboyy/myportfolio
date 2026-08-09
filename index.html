@@ -461,8 +461,12 @@
            ======================================== */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
             gap: 2.5rem;
+        }
+
+        .project-card--featured {
+            grid-column: 1 / -1;
         }
 
         .project-card {
@@ -563,7 +567,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
+            min-height: clamp(460px, 55vw, 620px);
+            aspect-ratio: auto;
             background:
                 radial-gradient(circle at top, var(--accent-glow), transparent 55%),
                 var(--bg-secondary);
@@ -577,16 +583,16 @@
 
         .fixit-phone {
             position: relative;
-            width: min(100%, 210px);
-            aspect-ratio: 210 / 430;
-            padding: 8px;
-            border-radius: 28px;
+            width: min(100%, clamp(260px, 28vw, 360px));
+            aspect-ratio: 360 / 740;
+            padding: 12px;
+            border-radius: 36px;
             background: linear-gradient(160deg, #2a3142 0%, #111827 100%);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
         }
 
         [data-theme="light"] .fixit-phone {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.12);
         }
 
         .fixit-phone-screen {
@@ -594,20 +600,20 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 22px;
+            border-radius: 28px;
             background: #000;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .fixit-phone-notch {
             position: absolute;
-            top: 6px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
             width: 34%;
-            height: 16px;
+            height: 20px;
             background: #000;
-            border-radius: 0 0 12px 12px;
+            border-radius: 0 0 14px 14px;
             z-index: 2;
             pointer-events: none;
         }
@@ -695,6 +701,78 @@
             color: var(--accent);
         }
 
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 44px;
+            height: 44px;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-card);
+            background: var(--bg-card);
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--text-primary);
+            transition: 0.3s;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1500;
+            background: var(--bg-mobile-nav);
+            backdrop-filter: blur(16px);
+            padding: 6rem 2rem 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-nav a {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .mobile-nav a.active,
+        .mobile-nav a:hover {
+            color: var(--accent);
+        }
+
         /* ========================================
            RESPONSIVE
            ======================================== */
@@ -703,33 +781,185 @@
             .navbar,
             .hero,
             section {
-                padding-left: 2rem;
-                padding-right: 2rem;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .navbar {
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+
+            .navbar.scrolled {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
             }
 
             .hero-content {
                 flex-direction: column !important;
                 text-align: center;
+                gap: 2.5rem;
             }
 
             .hero-text {
                 text-align: center !important;
             }
 
+            .hero-description {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
             [data-theme="light"] .hero-image-wrapper {
                 margin-left: 0;
+                width: min(100%, 420px);
+            }
+
+            .hero-image-wrapper {
+                width: min(100%, 340px);
+                margin: 0 auto;
             }
 
             .hero-actions {
                 justify-content: center;
+                flex-wrap: wrap;
             }
 
-            .nav-links {
-                display: none;
+            .nav-links,
+            .nav-pill-wrapper {
+                display: none !important;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-nav {
+                display: block;
             }
 
             .contact-layout {
                 grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            section {
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+            }
+
+            .section-title {
+                margin-bottom: 2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+            }
+
+            .project-card--featured .project-info {
+                text-align: center;
+                align-items: center;
+            }
+
+            .project-card--featured .project-tags,
+            .project-card--featured .project-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                font-size: 0.9rem;
+            }
+
+            .navbar,
+            .hero,
+            section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            section {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+
+            .hero {
+                padding-top: 5.5rem;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                letter-spacing: -1.5px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .project-info {
+                padding: 1.75rem 1.25rem;
+            }
+
+            .project-info h3 {
+                font-size: 1.35rem;
+            }
+
+            .project-preview--phone {
+                min-height: clamp(520px, 115vw, 680px);
+                padding: 1.5rem 0.75rem;
+            }
+
+            .fixit-phone {
+                width: min(92vw, 340px);
+            }
+
+            .project-links {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+            }
+
+            .project-link,
+            .project-link-secondary {
+                justify-content: center;
+                padding: 0.75rem 0;
+            }
+
+            .theme-toggle-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .theme-toggle-floating {
+                width: 48px;
+                height: 48px;
+            }
+
+            .contact-form input,
+            .contact-form textarea {
+                padding: 1rem;
+            }
+
+            footer {
+                padding: 2rem 1rem !important;
             }
         }
 
@@ -766,6 +996,21 @@
             <li><a href="#projects">PROJECTS</a></li>
             <li><a href="#services">SERVICES</a></li>
             <li><a href="#contact">CONTACT</a></li>
+        </ul>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
@@ -846,7 +1091,7 @@
             </div>
             <div class="projects-grid">
                 <!-- Project: Fixit GH -->
-                <div class="project-card reveal">
+                <div class="project-card project-card--featured reveal">
                     <div class="project-preview project-preview--phone">
                         <div class="fixit-phone-wrap">
                             <div class="fixit-phone" aria-label="Fixit GH live demo">
@@ -1218,7 +1463,7 @@
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
 
             const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-pill a, .nav-links a');
+            const navLinks = document.querySelectorAll('.nav-pill a, .nav-links a, .mobile-nav a');
             let current = "";
             sections.forEach(s => {
                 if (window.pageYOffset >= s.offsetTop - 300) current = s.id
@@ -1229,6 +1474,28 @@
                 if (l.getAttribute('href').includes(current) && current !== "") l.classList.add('active');
             });
         };
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        const closeMobileNav = () => {
+            mobileMenuBtn.classList.remove('active');
+            mobileNav.classList.remove('open');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        };
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.toggle('open');
+            mobileMenuBtn.classList.toggle('active', isOpen);
+            mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
     </script>
 </body>
 
