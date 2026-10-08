@@ -10,11 +10,12 @@
     <meta name="theme-color" content="#fdfdfd">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="PHILIP">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
     <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -830,6 +831,11 @@
            ======================================== */
         @media (max-width: 1024px) {
 
+            .nav-logo {
+                font-size: 1.75rem;
+                letter-spacing: -1.5px;
+            }
+
             .navbar,
             .hero,
             section {
@@ -838,12 +844,14 @@
             }
 
             .navbar {
-                padding-top: 1.25rem;
+                padding-top: max(1.25rem, env(safe-area-inset-top));
                 padding-bottom: 1.25rem;
+                padding-left: max(1.5rem, env(safe-area-inset-left));
+                padding-right: max(1.5rem, env(safe-area-inset-right));
             }
 
             .navbar.scrolled {
-                padding-top: 1rem;
+                padding-top: max(1rem, env(safe-area-inset-top));
                 padding-bottom: 1rem;
             }
 
@@ -922,11 +930,21 @@
                 font-size: 0.9rem;
             }
 
+            .nav-logo {
+                font-size: 1.5rem;
+                letter-spacing: -1px;
+            }
+
             .navbar,
             .hero,
             section {
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: max(1.1rem, env(safe-area-inset-left));
+                padding-right: max(1.1rem, env(safe-area-inset-right));
+            }
+
+            .navbar {
+                padding-top: max(1rem, env(safe-area-inset-top));
+                padding-bottom: 1rem;
             }
 
             section {
@@ -934,41 +952,68 @@
                 padding-bottom: 4rem;
             }
 
+            .section-title {
+                font-size: clamp(1.65rem, 7vw, 2.3rem);
+                letter-spacing: -1.5px;
+                margin-bottom: 2rem;
+            }
+
             .hero {
-                padding-top: 5.5rem;
+                padding-top: max(6rem, calc(4.5rem + env(safe-area-inset-top)));
+                padding-bottom: 3.5rem;
                 min-height: auto;
             }
 
             .hero h1 {
+                font-size: clamp(1.65rem, 7.5vw, 2.3rem);
                 letter-spacing: -1.5px;
+                line-height: 1.05;
+                margin-bottom: 1.25rem;
+            }
+
+            .hero-description {
+                font-size: 0.88rem;
+                line-height: 1.65;
+                margin-bottom: 2rem;
             }
 
             .hero-actions {
                 flex-direction: column;
+                gap: 0.85rem;
                 width: 100%;
             }
 
             .btn-primary,
             .btn-secondary {
                 width: 100%;
+                min-height: 48px;
                 justify-content: center;
+                padding: 0.95rem 1.5rem;
             }
 
             .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1.25rem;
             }
 
             .service-card {
-                padding: 2rem 1.5rem;
+                padding: 1.75rem 1.25rem;
+                border-radius: 1.5rem;
             }
 
             .skills-container {
                 grid-template-columns: 1fr;
-                gap: 1.75rem;
+                gap: 1.5rem;
             }
 
             .skill-category-card {
-                padding: 2rem 1.5rem;
+                padding: 1.75rem 1.25rem;
+                border-radius: 1.5rem;
+            }
+
+            .skill-category-title {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
             }
 
             .skills-list {
@@ -976,22 +1021,59 @@
                 gap: 0.75rem;
             }
 
+            .skill-item {
+                padding: 1rem 0.65rem;
+                border-radius: 1rem;
+            }
+
+            .skill-item-name {
+                font-size: 0.82rem;
+                word-break: break-word;
+            }
+
+            .skill-item-detail {
+                font-size: 0.64rem;
+                word-break: break-word;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                border-radius: 1.5rem;
+            }
+
             .project-info {
-                padding: 1.75rem 1.25rem;
+                padding: 1.5rem 1.25rem;
             }
 
             .project-info h3 {
-                font-size: 1.35rem;
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .project-description {
+                font-size: 0.85rem;
+                margin-bottom: 1.25rem;
+                line-height: 1.6;
             }
 
             .project-preview--phone {
-                min-height: clamp(520px, 115vw, 680px);
-                padding: 1.5rem 0.75rem;
+                min-height: clamp(420px, 95vw, 560px);
+                padding: 1.25rem 0.5rem;
             }
 
             .fixit-phone {
-                width: min(calc(100vw - 2rem), 340px);
+                width: min(calc(100vw - 3rem), 280px);
                 max-width: 100%;
+                border-radius: 28px;
+                padding: 10px;
+            }
+
+            .fixit-phone-screen {
+                border-radius: 20px;
             }
 
             .watermark {
@@ -1002,21 +1084,95 @@
                 flex-direction: column;
                 align-items: stretch;
                 width: 100%;
+                gap: 0.75rem;
             }
 
             .project-link,
             .project-link-secondary {
                 justify-content: center;
-                padding: 0.75rem 0;
+                padding: 0.85rem 1rem;
+                min-height: 44px;
+                border-radius: 10px;
+                width: 100%;
+            }
+
+            .project-link-secondary {
+                border: 1px solid var(--border-card);
+                background: var(--bg-secondary);
             }
 
             .contact-form input,
             .contact-form textarea {
                 padding: 1rem;
+                font-size: 16px !important;
+                -webkit-appearance: none;
+                border-radius: 12px;
+            }
+
+            .mobile-nav {
+                padding-top: max(5.5rem, calc(4.5rem + env(safe-area-inset-top)));
+                padding-bottom: max(2rem, env(safe-area-inset-bottom));
+                padding-left: max(2rem, env(safe-area-inset-left));
+                padding-right: max(2rem, env(safe-area-inset-right));
             }
 
             footer {
-                padding: 2rem 1rem !important;
+                padding: 2.5rem 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .nav-logo {
+                font-size: 1.35rem;
+                letter-spacing: -0.5px;
+            }
+
+            .navbar,
+            .hero,
+            section {
+                padding-left: 0.85rem;
+                padding-right: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+                letter-spacing: -1px;
+            }
+
+            .skill-category-card {
+                padding: 1.25rem 0.75rem;
+            }
+
+            .skills-list {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .skill-item {
+                padding: 0.85rem 0.4rem;
+                border-radius: 0.85rem;
+            }
+
+            .skill-item-icon {
+                width: 26px;
+                height: 26px;
+            }
+
+            .skill-item-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .skill-item-name {
+                font-size: 0.74rem;
+            }
+
+            .skill-item-detail {
+                font-size: 0.58rem;
+            }
+
+            .project-info {
+                padding: 1.25rem 0.85rem;
             }
         }
 
