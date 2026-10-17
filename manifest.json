@@ -1,12 +1,12 @@
 {
-  "name": "Philip Agbove Portfolio",
-  "short_name": "PHILIP",
+  "name": "Agbove Philip Kwabena Portfolio",
+  "short_name": "AGBOVE",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fdfdfd",
   "theme_color": "#ffffff",
-  "description": "Philip Agbove — Fullstack Developer Portfolio",
+  "description": "Agbove Philip Kwabena — Fullstack Developer & Software Engineer Portfolio",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
